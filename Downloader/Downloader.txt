@@ -1,0 +1,14 @@
+Downloader
+
+You are making a file downloader.
+To make the downloads faster, you decide to use concurrency. 
+Each file download will run as a separate Goroutine.
+
+To simulate a file download, the download() function needs to take the size of the file as an argument 
+and count the sum of all integers from 0 to that number (inclusive).
+
+The given program takes three file sizes as inputs and calls the download() function 
+as Goroutines for each file.
+Complete the program by declaring the download() function 
+and sending the result of their operation to main() using channels. 
+The results should be added together in main() and output.
