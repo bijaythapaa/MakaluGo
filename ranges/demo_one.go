@@ -7,7 +7,7 @@ func main() {
 	arr := [4]string{"AMar", "Jyoti", "Rekha"}
 
 	for k, v := range arr {
-		fmt.Println("range on array key: ", key, " value: ", v)
+		fmt.Println("range on array key: ", k, " value: ", v)
 	}
 
 	// Range on slice
