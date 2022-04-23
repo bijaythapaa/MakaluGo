@@ -28,6 +28,27 @@ func (g *Game) getWinner() *Player {
 	return winner
 }
 
+type Chain struct {
+	Base
+	value int
+	next  *Chain
+}
+
+func (c *Chain) sayOk() {
+	fmt.Println("Chain Ok")
+}
+
+type Base struct {
+}
+
+func (b *Base) sayHi() {
+	fmt.Println("Base Hi")
+}
+
+func (c *Base) sayOk() {
+	fmt.Println("Base Ok")
+}
+
 func main() {
 
 	g := &Game{
@@ -64,4 +85,22 @@ func main() {
 
 	winner := g.getWinner()
 	fmt.Println("*Winner: ", winner)
+
+	b := Base{}
+	b.sayHi()
+	b.sayOk()
+
+	c1 := Chain{value: 100}
+	fmt.Println("c1", c1)
+
+	c1.sayHi()
+
+	c2 := &Chain{value: 200}
+	c1.next = c2
+	// fmt.Println("c1", c1)
+	// fmt.Println("c1.next", c1.next)
+
+	c1.next.sayHi()
+	c1.sayOk()
+
 }
