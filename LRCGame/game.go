@@ -1,12 +1,36 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func main() {
 	fmt.Println("Welcome to the LRC Game !!")
 	g := new()
 	fmt.Println("How many players will play the Game?")
 	fmt.Println("Note: at least 3 players")
+
+	// need players count and will take it as input
+	var playersCount int
+	for {
+		fmt.Scanln(&playersCount)
+		if playersCount < 3 {
+			fmt.Println("Note: Enter number more than 2")
+			continue
+		}
+		break
+	}
+
+	for i := 0; i < playersCount; i++ {
+		playerName := fmt.Sprintf("p%v", i)
+		P := g.join(playerName)
+		fmt.Println(fmt.Sprintf("player:%v joined", P.name))
+	}
+
+	// turn
+	turn := g.players[0]
 
 }
 
@@ -60,4 +84,51 @@ type Player struct {
 	tokens int
 	right  *Player
 	left   *Player
+}
+
+// roll uses rand to return dicefaces
+func (p *Player) rollDice() (result []string) {
+	// find out how many dices we should roll
+	// if user has more than 3 tokens he can roll 3 dices
+	// or he roll exact number of tokens as dices
+	dices := p.tokens
+	if p.tokens > 2 {
+		dices = 3
+	}
+
+	//roll the dices and update the value on the player
+	for index := 0; index < dices; index++ {
+		d := Dice{}
+		diceResults := d.roll()
+		result = append(result, diceResults)
+		switch diceResults {
+		case "right":
+			p.tokens--
+			p.right.tokens++
+		case "left":
+			p.tokens--
+			p.left.tokens++
+		case "center":
+			p.tokens--
+		}
+	}
+}
+
+// dice
+type Dice struct {
+}
+
+func (d *Dice) roll() string {
+	rand.Seed(time.Now().UnixNano())
+	r := rand.Intn(6)
+	switch r {
+	case 0:
+		return "right"
+	case 1:
+		return "left"
+	case 2:
+		return "center"
+	default:
+		return "DoNothing"
+	}
 }
