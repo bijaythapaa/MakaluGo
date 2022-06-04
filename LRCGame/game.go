@@ -31,6 +31,44 @@ func main() {
 
 	// turn
 	turn := g.players[0]
+	for {
+		// check if player has tokens, if not skip him
+		if turn.tokens == 0 {
+			fmt.Println(fmt.Sprintf("player %v, you have no tokens.", turn.name))
+			turn = turn.right
+			continue
+		}
+
+		// if player has token, roll the dice
+		fmt.Println(fmt.Sprintf("player %v, you have %v tokens, hit any key to roll dice", turn.name, turn.tokens))
+		var playerInput string
+		fmt.Scanln(&playerInput)
+
+		if playerInput == "EXIT" {
+			fmt.Println("you killed the Dice game :(")
+			return
+		}
+
+		// roll dice and apply the game outcome
+		diceResult := turn.rollDice()
+		fmt.Println("You got: ", diceResult)
+
+		for _, p := range g.players {
+			fmt.Println(fmt.Sprintf("player %v has, %v tokens", p.name, p.tokens))
+		}
+
+		// find if the game winner
+		// and exit the Game
+		winner := g.finished()
+		if winner != nil {
+			fmt.Println("winner: ", winner.name)
+			return
+		}
+
+		//update turn
+		turn = turn.right
+
+	}
 
 }
 
@@ -54,7 +92,7 @@ func (g *Game) join(playerName string) *Player {
 		g.players[0].left = &p
 	}
 	g.players = append(g.players, &p)
-	return
+	return &p
 }
 
 // finished check do we have only one player with Tokens
@@ -112,6 +150,7 @@ func (p *Player) rollDice() (result []string) {
 			p.tokens--
 		}
 	}
+	return
 }
 
 // dice
