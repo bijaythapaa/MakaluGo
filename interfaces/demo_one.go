@@ -53,9 +53,9 @@ func (h *Human) talk(s string) {
 func main() {
 	amar := &Human{}
 	steps := []Point{
-		Point{1, 1},
-		Point{2, 2},
-		Point{3, 3},
+		{1, 1},
+		{2, 2},
+		{3, 3},
 	}
 	// fmt.Println(steps)
 	err := move(amar, steps)
