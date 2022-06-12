@@ -50,8 +50,28 @@ func (h *Human) talk(s string) {
 	fmt.Println("This human talking: ", s)
 }
 
+// animal
+type Animal struct {
+	position Point
+}
+
+// implement interface Walter on struct Animal
+func (a *Animal) walk(p Point) error {
+	if p.x < 0 || p.y < 0 {
+		return errors.New("invalid point")
+	}
+	a.position = p
+	fmt.Println("animal walked to:  ", a.position)
+	return nil
+}
+
+func (a *Animal) getPosition() Point {
+	return a.position
+}
+
 func main() {
 	amar := &Human{}
+	dog := &Animal{}
 	steps := []Point{
 		{1, 1},
 		{2, 2},
@@ -62,11 +82,35 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	err = move(dog, steps)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// err = move(dog, []Point{Point{-1, 2}})
+	err = move(dog, []Point{{-1, 2}})
+	if err != nil {
+		fmt.Println(nil)
+	}
+
+	moveHuman(amar, steps)
 }
 
 // function takes interface as parameter type
 // can take any struct type implements the interface
 func move(w Walker, points []Point) error {
+	for _, p := range points {
+		err := w.walk(p)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// function takes interface as parameter type
+// can take any struct type implements the interface
+func moveHuman(w *Human, points []Point) error {
 	for _, p := range points {
 		err := w.walk(p)
 		if err != nil {
