@@ -1,3 +1,3 @@
-module github.com/dbijaya/my-project
+module github.com/bijaythapaa/MakaluGo
 
 go 1.16
