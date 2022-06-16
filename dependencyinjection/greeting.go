@@ -3,7 +3,6 @@ package dependencyinjection
 import (
 	"fmt"
 	"io"
-	"os"
 )
 
 func OtherGreet(writer io.Writer, name string) {
@@ -13,6 +12,6 @@ func OtherGreet(writer io.Writer, name string) {
 	}
 }
 
-func main() {
-	OtherGreet(os.Stdout, "Vijay")
-}
+// func main() {
+// 	OtherGreet(os.Stdout, "Vijay")
+// }
